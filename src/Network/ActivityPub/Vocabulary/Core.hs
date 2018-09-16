@@ -1,11 +1,11 @@
-module Network.ActivityPub.Core where
+module Network.ActivityPub.Vocabulary.Core where
 
-import           Data.Maybe                     (Maybe)
-import           Data.Text                      (Text)
-import           Data.Time                      (UTCTime)
-import           Network.URI                    (URI)
+import           Data.Maybe                                (Maybe)
+import           Data.Text                                 (Text)
+import           Data.Time                                 (UTCTime)
+import           Network.URI                               (URI)
 
-import           Network.ActivityPub.Properties
+import           Network.ActivityPub.Vocabulary.Properties
 
 data Object =
     Object

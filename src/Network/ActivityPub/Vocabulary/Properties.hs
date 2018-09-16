@@ -1,4 +1,4 @@
-module Network.ActivityPub.Properties where
+module Network.ActivityPub.Vocabulary.Properties where
 
 import           Data.Either (Either)
 import           Data.Text   (Text)

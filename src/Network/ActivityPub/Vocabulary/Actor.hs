@@ -1,6 +1,6 @@
-module Network.ActivityPub.Actor where
+module Network.ActivityPub.Vocabulary.Actor where
 
-import           Network.ActivityPub.Core (Object)
+import           Network.ActivityPub.Vocabulary.Core (Object)
 
 type Application = Object
 type Group = Object

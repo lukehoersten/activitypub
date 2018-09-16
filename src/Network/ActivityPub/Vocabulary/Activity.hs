@@ -1,6 +1,6 @@
-module Network.ActivityPub.Activity where
+module Network.ActivityPub.Vocabulary.Activity where
 
-import           Network.ActivityPub.Core (Activity)
+import           Network.ActivityPub.Vocabulary.Core (Activity)
 
 type Accept = Activity
 type Add = Activity
