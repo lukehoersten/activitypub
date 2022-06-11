@@ -1,57 +1,89 @@
-name:                activitypub
-version:             0.1.0.0
--- synopsis:
--- description:
-homepage:            https://github.com/LukeHoersten/activitypub#readme
-license:             BSD3
-license-file:        LICENSE
-author:              Luke Hoersten
-maintainer:          luke@hoersten.org
-copyright:           2018 Luke Hoersten
-category:            Web
-build-type:          Simple
-extra-source-files:  README.md
-cabal-version:       >=1.10
+cabal-version: 3.0
 
-library
-  hs-source-dirs:      src
-  exposed-modules:     Network.ActivityPub.Vocabulary.Activity
-                     , Network.ActivityPub.Vocabulary.Actor
-                     , Network.ActivityPub.Vocabulary.Core
-                     , Network.ActivityPub.Vocabulary.Object
-                     , Network.ActivityPub.Vocabulary.Properties
+name: activitypub
+version: 0.1.0.0
 
-  build-depends:       aeson       >= 1.3 && < 1.4
-                     , base        >= 4.7 && < 5
-                     , network-uri >= 2.6 && < 2.7
-                     , text        >= 1.2 && < 1.3
-                     , time        >= 1.8 && < 1.10
-                     -- , servant-server
-                     -- , wai
-                     -- , warp
-  default-language:    Haskell2010
+category: Web
 
--- executable activitypub-exe
---   hs-source-dirs:      app
---   main-is:             Main.hs
---   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
---   build-depends:       base
---                      , activitypub
---   default-language:    Haskell2010
+description:
+    The [ActivityPub protocol](https://www.w3.org/TR/activitypub/)
+    is a decentralized social networking protocol.
+    It provides a client to server API for creating, updating and
+    deleting content, as well as a federated server to server API
+    for delivering notifications and content.
 
--- test-suite activitypub-test
---   type:                exitcode-stdio-1.0
---   hs-source-dirs:      test
---   main-is:             Spec.hs
---   build-depends:       base
---                      , activitypub
---                      , hspec
---                      , hspec-wai
---                      , hspec-wai-json
---                      , aeson
---   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
---   default-language:    Haskell2010
+homepage: https://github.com/LukeHoersten/activitypub#readme
+
+license: BSD-3-Clause
+license-file: LICENSE
+author: Luke Hoersten
+maintainer: luke@hoersten.org
+copyright: 2018 Luke Hoersten
+
+build-type: Simple
+
+extra-source-files: README.md
 
 source-repository head
-  type:     git
-  location: https://github.com/LukeHoersten/activitypub
+    type: git
+    location: https://github.com/LukeHoersten/activitypub
+
+common base
+    default-language: Haskell2010
+    ghc-options: -Wall -fdefer-typed-holes
+    default-extensions:
+        DataKinds
+        OverloadedStrings
+        QuasiQuotes
+        TemplateHaskell
+        TypeOperators
+    build-depends:
+        aeson >= 2
+      , base ^>= 4.14 || ^>= 4.15 || ^>= 4.16
+      , network-uri ^>= 2.6.3
+      , text >= 1.2 && < 1.3
+      , time >= 1.8 && < 1.10
+      , servant-server
+      , wai
+      , warp
+
+
+library
+    import: base
+    build-depends: activitypub-internal
+    reexported-modules:
+        Network.ActivityPub.Vocabulary.Activity
+      , Network.ActivityPub.Vocabulary.Actor
+      , Network.ActivityPub.Vocabulary.Core
+      , Network.ActivityPub.Vocabulary.Object
+      , Network.ActivityPub.Vocabulary.Properties
+
+library activitypub-internal
+    import: base
+    hs-source-dirs: src
+    exposed-modules:
+        Network.ActivityPub.Vocabulary.Activity
+      , Network.ActivityPub.Vocabulary.Actor
+      , Network.ActivityPub.Vocabulary.Core
+      , Network.ActivityPub.Vocabulary.Object
+      , Network.ActivityPub.Vocabulary.Properties
+      , Lib
+
+executable activitypub-exe
+    import: base
+    hs-source-dirs: app
+    main-is: Main.hs
+    ghc-options: -threaded -rtsopts -with-rtsopts=-N
+    build-depends: activitypub-internal
+
+test-suite activitypub-test
+    import: base
+    type: exitcode-stdio-1.0
+    hs-source-dirs: test
+    main-is: Spec.hs
+    build-depends:
+        activitypub-internal
+      , hspec
+      , hspec-wai
+      , hspec-wai-json
+    ghc-options: -threaded -rtsopts -with-rtsopts=-N

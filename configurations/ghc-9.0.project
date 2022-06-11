@@ -1,0 +1,4 @@
+packages: ./activitypub.cabal
+
+constraints:
+    base == 4.15.*
